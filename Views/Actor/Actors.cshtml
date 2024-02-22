@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Actor>
+@{
+    ViewData["Title"] = "List of actors";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <table class="table">
+            <thead>
+                <tr class="text-center">
+                    <th> @Html.DisplayNameFor(model => model.ProfilePictureURL) </th>
+                    <th> @Html.DisplayNameFor(model => model.FullName) </th>
+                    <th> @Html.DisplayNameFor(model => model.Bio) </th>
+                    <th> Actions </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            <img class="rounded" src="@item.ProfilePictureURL" style="max-width: 150px"/>
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayNameFor(model => model.FullName);
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayNameFor(model => model.Bio);
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id"> <i class="bi  bi-pencil-square"> Edit </i> </a> |
+                            <a action="btn btn-outline-info" asp-controller="Actor" asp-action="Details" asp-route-id="@item.Id"> <i class="bi bi-eye"> Details </i> </a> |
+                            <a action="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"> <i class="bi bi-trash"> Delete </i> </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@* we're adding the new button *@
+
+<div class="text-white" style="position: fixed; right: 25px; bottom: 25px;">
+    <a asp-controller="Actor" asp-action="Create" class="btn btn-success"> <i class="bi bi-plus-circle"></i> New </a>
+</div> 

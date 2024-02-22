@@ -1,4 +1,6 @@
 ﻿using eTickets.Context;
+using eTickets.Models;
+using eTickets.Models.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,17 +8,88 @@ namespace eTickets.Controllers
 {
     public class ActorController : Controller
     {
-        private readonly AppDbContext _context;
-        public ActorController(AppDbContext context)
+        private readonly IActorService _service;
+        public ActorController(IActorService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        public async Task<IActionResult> Actors()
+        public async Task<IActionResult> Actor()
         {
-            var data =await _context.Actors.ToListAsync();
+            var data = await _service.GetActors();
 
             return View(data);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        public IActionResult Create([Bind("FullName,ProfilePictureURL,Bio")] Actor actor)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(actor);
+            }
+            _service.AddActor(actor);
+            return RedirectToAction(nameof(Actor));
+        }
+
+        public async Task<IActionResult> Details(int actorId)
+        {
+            var details = await _service.GetActorById(actorId);
+
+            if (details == null)
+            {
+                return View("NotFound");
+            }
+            return View(details);
+        }
+
+        public async Task<IActionResult> Edit(int actorId)
+        {
+            var details = await _service.GetActorById(actorId);
+
+            if (details == null)
+            {
+                return View("NotFound");
+            }
+            return View(details);
+        }
+
+        public IActionResult Edit(int actorId, [Bind("FullName,ProfilePictureURL,Bio")] Actor actor)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(actor);
+            }
+            _service.UpdateActor(actorId, actor);
+            return RedirectToAction(nameof(Actor));
+        }
+
+        public async Task<IActionResult> Delete(int actorId)
+        {
+            var details = await _service.GetActorById(actorId);
+
+            if (details == null)
+            {
+                return View("NotFound");
+            }
+            return View(details);
+        }
+
+        /* we cannot have two methods with the same name and the same parameters in the controller*/
+        public async Task<IActionResult> DeleteConfirmed(int actorId)
+        {
+            var actorExists = await _service.GetActorById(actorId);
+            if (actorExists == null)
+            {
+                return View("NotFound");
+            }
+
+            await _service.DeleteActor(actorId);
+            return RedirectToAction(nameof(Actor));
         }
     }
 }

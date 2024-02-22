@@ -11,7 +11,7 @@ namespace eTickets.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Producer()
         {
             var data = await _context.Producers.ToListAsync();
 

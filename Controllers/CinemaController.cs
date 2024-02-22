@@ -11,7 +11,7 @@ namespace eTickets.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Cinema()
         {
             var data = _context.Cinemas.ToList();
 
