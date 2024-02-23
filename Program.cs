@@ -13,6 +13,7 @@ var app = builder.Build();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
 builder.Services.AddScoped<IActorService, ActorService>();
+builder.Services.AddScoped<IProducerService, ProducerService>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
