@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using eTickets.Models.BaseRepository;
+using System.ComponentModel.DataAnnotations;
 
 namespace eTickets.Models;
 
-public class Actor
+public class Actor : IBaseEntity
 {
     [Key]
     public int Id { get; set; }
