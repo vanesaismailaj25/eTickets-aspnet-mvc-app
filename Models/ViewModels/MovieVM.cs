@@ -1,31 +1,47 @@
 ﻿using eTickets;
 using eTickets.Models;
-using eTickets.Models.BaseRepository;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Movie : IBaseEntity
+public class MovieVM 
 {
-    [Key]
-    public int Id { get; set; }
-    [Display(Name = "Name")]
+    [Required]
+    [Display(Name = "Movie Name")]
     public string Name { get; set; }
-    [Display(Name = "Description")]
+
+    [Required]
+    [Display(Name = "Movie Description")]
     public string Description { get; set; }
+
+    [Required]
     [Display(Name = "Start date")]
     public DateTime StartDate { get; set; }
+
+    [Required]
     [Display(Name = "End date")]
     public DateTime EndDate { get; set; }
-    [Display(Name = "Price")]
+
+    [Required]
+    [Display(Name = "Movie Price")]
     public double Price { get; set; }
-    [Display(Name = "Image")]
+
+    [Required]
+    [Display(Name = "Movie poster")]
     public string ImageURL { get; set; }
+
+    [Required]
+    [Display(Name = "Select category")]
     public MovieCategory MovieCategory { get; set; }
+
+    [Required]
+    [Display(Name = "Select a cinema")]
     public int CinemaId { get; set; }
-    [ForeignKey("CinemaId")]
-    public Cinema Cinema { get; set; }
+
+    [Required]
+    [Display(Name = "Select a producer")]
     public int ProducerId { get; set; }
-    [ForeignKey("ProducerId")]
-    public Producer Producer { get; set; }
-    public List<ActorMovie> ActorsMovies { get; set; }
+
+    [Required]
+    [Display(Name = "Select actor/s")]
+    public List<int> ActorIds { get; set; }
 }
