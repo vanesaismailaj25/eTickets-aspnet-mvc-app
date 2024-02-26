@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class MovieVM 
 {
+    public int Id { get; set; }
     [Required]
     [Display(Name = "Movie Name")]
     public string Name { get; set; }
