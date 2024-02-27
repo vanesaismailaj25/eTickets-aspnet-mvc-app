@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-8 offset-2">
                 <div class="form-group text-center">
-                    <img id="ProfilePicturePreview" />
+                    <img class="border-info rounded-circle" style="max-width: 150px" id="ProfilePicturePreview" />
                 </div>
 
                 <div class="form-group">
@@ -33,8 +33,8 @@
 
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-outline-success float-right" />
-                    <a class="btn btn-outline-success float-right" asp-action="Edit" asp-route-id="@Model.Id"> Edit </a>
-                    <a class="btn btn-outline-secondary" asp-action="Actor"> Show all </a>
+                    <a class="btn btn-outline-success float-right" asp-controller="Actor" asp-action="Edit" asp-route-id="@Model.Id"> Edit </a>
+                    <a class="btn btn-outline-secondary" asp-controller="Actor" asp-action="Actor"> Show all </a>
                 </div>
             </div>
         </div>

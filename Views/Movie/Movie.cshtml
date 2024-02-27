@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Movie>
 
 @{
-    ViewData["Title"] = "Movies";
+    ViewData["Title"] = "List of movies";
 }
 
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="card mb-4 col-xs-6 border-primary mb-3">
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
             <div class="card mb-3" style="max-width: 540px">
                 <div class="row g-0">
                     <div class="col-md-12">
@@ -50,8 +50,12 @@
                     <div class="col-md-12">
                         <div class="card-footer">
                             <p class="card-text">
-                                <a class="btn btn-outline-primary float-right"> <i class="bi bi-eye-fill"> Show details </i></a>
-                                <a class="btn btn-success text-white"> <i class="bi bi-cart-plus"> Add to cart (Price @item.Price.ToString("c")) </i></a>
+                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-asp-route-id="@item.Id">
+                                    <i class="bi bi-eye-fill"> Show details </i>
+                                </a>
+                                <a class="btn btn-success text-white">
+                                    <i class="bi bi-cart-plus"> Add to cart (Price @item.Price.ToString("c")) </i>
+                                </a>
                             </p>
                         </div>
                     </div>
@@ -61,4 +65,4 @@
     }
 </div>
 
-@await Html.PartialAsync("_CreateItem", "Producer")
+@await Html.PartialAsync("_CreateItem", "Movie")

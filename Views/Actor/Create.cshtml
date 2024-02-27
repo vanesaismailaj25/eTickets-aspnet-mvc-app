@@ -16,7 +16,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     @* profile picture preview placeholder  *@
                     <div class="form-group text-center">
-                        <img id="ProfilePicturePreview" />
+                        <img id="ProfilePicturePreview" class="border-info rounded-circle" style="max-width: 150px" />
                     </div>
                     <div class="form-group">
                         <label asp-for="ProfilePictureURL" class="control-label"> </label>
@@ -36,7 +36,7 @@
 
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-outline-success float-right" />
-                        <a class="btn btn-outline-secondary" asp-action="Actor"> Show all</a>
+                        <a class="btn btn-outline-secondary" asp-controller="Actor" asp-action="Actor"> Show all</a>
                     </div>
                 </form>
             </div>

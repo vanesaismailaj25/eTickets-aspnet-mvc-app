@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace eTickets.Models.BaseRepository;
+namespace eTickets.Data.BaseRepository;
 
 public interface IBaseEntityRepository<T> where T : class, IBaseEntity, new()
 {
