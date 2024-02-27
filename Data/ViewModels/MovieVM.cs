@@ -1,4 +1,4 @@
-﻿using eTickets;
+﻿using eTickets.Data.Enums;
 using eTickets.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -32,7 +32,7 @@ public class MovieVM
 
     [Required]
     [Display(Name = "Select category")]
-    public MovieCategory MovieCategory { get; set; }
+    public MovieCategoryEnum MovieCategory { get; set; }
 
     [Required]
     [Display(Name = "Select a cinema")]

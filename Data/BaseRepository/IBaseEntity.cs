@@ -1,4 +1,4 @@
-﻿namespace eTickets.Models.BaseRepository
+﻿namespace eTickets.Data.BaseRepository
 {
     public interface IBaseEntity
     {

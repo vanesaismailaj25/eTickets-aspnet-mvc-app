@@ -1,10 +1,11 @@
 ﻿using eTickets.Context;
-using eTickets.Models.BaseRepository;
-using eTickets.Models.Services.IServices;
-using eTickets.Models.ViewModels;
+using eTickets.Data.BaseRepository;
+using eTickets.Data.Services.IServices;
+using eTickets.Data.ViewModels;
+using eTickets.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace eTickets.Models.Services.Services;
+namespace eTickets.Data.Services.Services;
 
 public class MovieService : BaseEntityRepository<Movie>, IMovieService
 {
@@ -33,7 +34,7 @@ public class MovieService : BaseEntityRepository<Movie>, IMovieService
         await _context.SaveChangesAsync();
 
         //lets add the actors
-        foreach(var actorId in movie.ActorIds)
+        foreach (var actorId in movie.ActorIds)
         {
             var newActorMovie = new ActorMovie()
             {
@@ -75,7 +76,7 @@ public class MovieService : BaseEntityRepository<Movie>, IMovieService
 
         if (dbMovie != null)
         {
-           dbMovie.Name = movie.Name;
+            dbMovie.Name = movie.Name;
             dbMovie.Description = movie.Description;
             dbMovie.Price = movie.Price;
             dbMovie.ImageURL = movie.ImageURL;
@@ -94,7 +95,7 @@ public class MovieService : BaseEntityRepository<Movie>, IMovieService
         await _context.SaveChangesAsync();
 
         //add actors
-        foreach(var actorId in movie.ActorIds)
+        foreach (var actorId in movie.ActorIds)
         {
             var newActorMovie = new ActorMovie()
             {

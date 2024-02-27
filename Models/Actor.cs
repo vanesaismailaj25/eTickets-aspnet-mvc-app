@@ -1,4 +1,4 @@
-﻿using eTickets.Models.BaseRepository;
+﻿using eTickets.Data.BaseRepository;
 using System.ComponentModel.DataAnnotations;
 
 namespace eTickets.Models;

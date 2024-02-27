@@ -1,6 +1,6 @@
-﻿using eTickets;
+﻿using eTickets.Data.BaseRepository;
+using eTickets.Data.Enums;
 using eTickets.Models;
-using eTickets.Models.BaseRepository;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,7 +20,7 @@ public class Movie : IBaseEntity
     public double Price { get; set; }
     [Display(Name = "Image")]
     public string ImageURL { get; set; }
-    public MovieCategory MovieCategory { get; set; }
+    public MovieCategoryEnum MovieCategory { get; set; }
     public int CinemaId { get; set; }
     [ForeignKey("CinemaId")]
     public Cinema Cinema { get; set; }
