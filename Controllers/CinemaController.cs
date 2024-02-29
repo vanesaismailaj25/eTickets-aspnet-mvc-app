@@ -1,5 +1,4 @@
-﻿using eTickets.Context;
-using eTickets.Data.Services.IServices;
+﻿using eTickets.Data.Services.IServices;
 using eTickets.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +23,7 @@ public class CinemaController : Controller
     {
         return View();
     }
+
     [HttpPost]
     public async Task<IActionResult> Create([Bind("Logo,Name,Description")] Cinema cinema)
     {

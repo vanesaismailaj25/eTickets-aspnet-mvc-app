@@ -51,6 +51,14 @@ public class BaseEntityRepository<T> : IBaseEntityRepository<T> where T : class,
         return entity;
     }
 
+    public async Task<T> GetEntityByIdAsync(int entityId, params Expression<Func<T, object>>[] includeProperties)
+    {
+        IQueryable<T> query = _context.Set<T>();
+        query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+
+        return await query.FirstOrDefaultAsync(n => n.Id == entityId);
+    }
+
     public async Task UpdateAsync(int entityId, T entity)
     {
         EntityEntry entityEntry = _context.Entry(entity);

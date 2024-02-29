@@ -52,7 +52,7 @@ public class MovieService : BaseEntityRepository<Movie>, IMovieService
         var movieDetails = await _context.Movies
             .Include(c => c.Cinema)
             .Include(p => p.Producer)
-            .Include(am => am.ActorsMovies).ThenInclude(a => a.Movie)
+            .Include(am => am.ActorsMovies).ThenInclude(a => a.Actor)
             .FirstOrDefaultAsync(m => m.Id == id);
 
         return movieDetails;
