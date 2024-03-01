@@ -1,4 +1,5 @@
 using eTickets.Context;
+using eTickets.Data.Cart;
 using eTickets.Data.Services.IServices;
 using eTickets.Data.Services.Services;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,14 @@ builder.Services.AddScoped<IActorService, ActorService>();
 builder.Services.AddScoped<IProducerService, ProducerService>();
 builder.Services.AddScoped<ICinemaService, CinemaService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+//configure the httpcontextaccessor
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -29,6 +38,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 

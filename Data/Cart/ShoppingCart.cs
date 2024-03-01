@@ -14,6 +14,20 @@ public class ShoppingCart
         _context = context;
     }
 
+    public static ShoppingCart GetShoppingCart(IServiceProvider services)
+    {
+        ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
+        var context = services.GetService<AppDbContext>();
+
+        string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
+        session.SetString("CartId", cartId);
+
+        return new ShoppingCart(context)
+        {
+            ShoppingCartId = cartId
+        };
+    }
+
     public void AddItemToCart(Movie movie)
     {
         var shoppingCartItem = _context.ShoppingCartItems.FirstOrDefault(n => n.Id == movie.Id && n.ShoppingCartId == ShoppingCartId);
@@ -62,5 +76,12 @@ public class ShoppingCart
             }
         }      
         _context.SaveChanges();
+    }
+
+    public async Task ClearShoppingCartAsync()
+    {
+        var items = await _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).ToListAsync();
+        _context.ShoppingCartItems.RemoveRange(items);
+        await _context.SaveChangesAsync();
     }
 }
