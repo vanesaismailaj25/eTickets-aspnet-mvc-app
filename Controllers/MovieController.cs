@@ -23,7 +23,7 @@ public class MovieController : Controller
 
         if (!string.IsNullOrEmpty(searchString))
         {
-            var filteredResult = data.Where(n => n.Name.Contains(searchString) || n.Description.Contains(searchString)).ToList();
+            var filteredResult = data.Where(n => n.Name.ToLower().Contains(searchString.ToLower()) || n.Description.ToLower().Contains(searchString.ToLower())).ToList();
 
             return View("Movie", filteredResult);
         }
@@ -33,7 +33,7 @@ public class MovieController : Controller
 
     public async Task<IActionResult> Details(int id)
     {
-        var movieDetails = await _service.GetEntityByIdAsync(id);
+        var movieDetails = await _service.GetMovieByIdAsync(id);
 
         return View(movieDetails);
     }
@@ -42,9 +42,9 @@ public class MovieController : Controller
     {
         var movieDropdownData = await _service.GetMovieDropdownValues();
 
-        ViewBag.Cinema = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
-        ViewBag.Producer = new SelectList(movieDropdownData.Producers, "Id", "FullName");
-        ViewBag.Actor = new SelectList(movieDropdownData.Actors, "Id", "Name");
+        ViewBag.Cinemas = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
+        ViewBag.Producers = new SelectList(movieDropdownData.Producers, "Id", "FullName");
+        ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "FullName");
 
         return View();
     }
@@ -56,9 +56,9 @@ public class MovieController : Controller
         {
             var movieDropdownData = await _service.GetMovieDropdownValues();
 
-            ViewBag.Cinema = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
-            ViewBag.Producer = new SelectList(movieDropdownData.Producers, "Id", "FullName");
-            ViewBag.Actor = new SelectList(movieDropdownData.Actors, "Id", "Name");
+            ViewBag.Cinemas = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
+            ViewBag.Producers = new SelectList(movieDropdownData.Producers, "Id", "FullName");
+            ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "FullName");
 
             return View(movie);
         }
@@ -69,7 +69,7 @@ public class MovieController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
-        var movieDetails = await _service.GetEntityByIdAsync(id);
+        var movieDetails = await _service.GetMovieByIdAsync(id);
 
         if (movieDetails == null)
             return View("NotFound");
@@ -91,9 +91,9 @@ public class MovieController : Controller
 
         var movieDropdownData = await _service.GetMovieDropdownValues();
 
-        ViewBag.Cinema = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
-        ViewBag.Producer = new SelectList(movieDropdownData.Producers, "Id", "FullName");
-        ViewBag.Actor = new SelectList(movieDropdownData.Actors, "Id", "Name");
+        ViewBag.Cinemas = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
+        ViewBag.Producers = new SelectList(movieDropdownData.Producers, "Id", "FullName");
+        ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "FullName");
 
         return View(response);
     }
@@ -110,9 +110,11 @@ public class MovieController : Controller
         {
             var movieDropdownData = await _service.GetMovieDropdownValues();
 
-            ViewBag.Cinema = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
-            ViewBag.Producer = new SelectList(movieDropdownData.Producers, "Id", "FullName");
-            ViewBag.Actor = new SelectList(movieDropdownData.Actors, "Id", "Name");
+            ViewBag.Cinemas = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
+            ViewBag.Producers = new SelectList(movieDropdownData.Producers, "Id", "FullName");
+            ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "FullName");
+
+            return View(movie);
         }
 
         await _service.UpdateMovie(movie);

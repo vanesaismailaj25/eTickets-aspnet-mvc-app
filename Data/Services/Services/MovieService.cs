@@ -49,13 +49,19 @@ public class MovieService : BaseEntityRepository<Movie>, IMovieService
 
     public async Task<Movie> GetMovieByIdAsync(int id)
     {
-        var movieDetails = await _context.Movies
-            .Include(c => c.Cinema)
+        //var movieDetails = await _context.Movies
+        //    .Include(c => c.Cinema)
+        //    .Include(p => p.Producer)
+        //    .Include(am => am.ActorsMovies).ThenInclude(a => a.Actor)
+        //    .FirstOrDefaultAsync(m => m.Id == id);
+
+        var details = await _context.Movies
+            .Include (c => c.Cinema)
             .Include(p => p.Producer)
-            .Include(am => am.ActorsMovies).ThenInclude(a => a.Movie)
+            .Include(am => am.ActorsMovies).ThenInclude (a => a.Actor)
             .FirstOrDefaultAsync(m => m.Id == id);
 
-        return movieDetails;
+        return details;
     }
 
     public async Task<MovieDropdownVM> GetMovieDropdownValues()

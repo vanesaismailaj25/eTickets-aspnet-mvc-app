@@ -18,6 +18,7 @@ public partial class AppDbContext : DbContext
     //order related tables
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

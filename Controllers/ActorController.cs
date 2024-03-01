@@ -1,8 +1,6 @@
-﻿using eTickets.Context;
-using eTickets.Data.Services.IServices;
+﻿using eTickets.Data.Services.IServices;
 using eTickets.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace eTickets.Controllers
 {
@@ -26,13 +24,14 @@ namespace eTickets.Controllers
             return View();
         }
 
-        public IActionResult Create([Bind("FullName,ProfilePictureURL,Bio")] Actor actor)
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("FullName,ProfilePictureURL,Bio")] Actor actor)
         {
             if (!ModelState.IsValid)
             {
                 return View(actor);
             }
-            _service.AddAsync(actor);
+            await _service.AddAsync(actor);
             return RedirectToAction(nameof(Actor));
         }
 
@@ -57,14 +56,14 @@ namespace eTickets.Controllers
             }
             return View(details);
         }
-
-        public IActionResult Edit(int actorId, [Bind("FullName,ProfilePictureURL,Bio")] Actor actor)
+        [HttpPost]
+        public async Task<IActionResult> Edit(int actorId, [Bind("FullName,ProfilePictureURL,Bio")] Actor actor)
         {
             if (!ModelState.IsValid)
             {
                 return View(actor);
             }
-            _service.UpdateAsync(actorId, actor);
+            await _service.UpdateAsync(actorId, actor);
             return RedirectToAction(nameof(Actor));
         }
 
@@ -79,6 +78,7 @@ namespace eTickets.Controllers
             return View(details);
         }
 
+        [HttpPost]
         /* we cannot have two methods with the same name and the same parameters in the controller*/
         public async Task<IActionResult> DeleteConfirmed(int actorId)
         {

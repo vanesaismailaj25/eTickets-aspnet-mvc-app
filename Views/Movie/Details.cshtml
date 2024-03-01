@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img src="@Model.ImageURL" width="100" alt="@Model.Name" />
+                    <img src="@Model.ImageURL" width="100%" alt="@Model.Name" />
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -60,7 +60,8 @@
                                 @foreach (var actor in Model.ActorsMovies)
                                 {
                                     <div class="column text-center">
-                                        <img class="border-info rounded-circle" src="@actor.Actor.ProfilePictureURL" style="max-width: 150px;" />
+                                        <img class="border-info rounded-circle" src="@actor.Actor.ProfilePictureURL" style="max-width: 150px" />
+                                        <br />
                                         <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.ActorId"> @actor.Actor.FullName </a>
                                     </div>
                                 }
@@ -71,7 +72,9 @@
                 <div class="col-md-12">
                     <div class="card-footer">
                         <p class="card-text">
-                            <a class="btn btn-outline-primary float-right" asp-controller="Movie" asp-action="Movie"> Back to list </a>
+                            <a class="btn btn-outline-primary float-right" asp-action="Movie">
+                                Back to list
+                            </a>
                             <a class="btn btn-success text-white"> <i class="bi bi-cart-plus"> Add to cart (Price @Model.Price.ToString("c")) </i></a>
                         </p>
                     </div>
