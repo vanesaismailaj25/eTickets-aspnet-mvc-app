@@ -33,7 +33,7 @@ public class MovieController : Controller
 
     public async Task<IActionResult> Details(int id)
     {
-        var movieDetails = await _service.GetEntityByIdAsync(id);
+        var movieDetails = await _service.GetMovieByIdAsync(id);
 
         return View(movieDetails);
     }
@@ -44,7 +44,7 @@ public class MovieController : Controller
 
         ViewBag.Cinemas = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
         ViewBag.Producers = new SelectList(movieDropdownData.Producers, "Id", "FullName");
-        ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "Name");
+        ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "FullName");
 
         return View();
     }
@@ -58,7 +58,7 @@ public class MovieController : Controller
 
             ViewBag.Cinemas = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
             ViewBag.Producers = new SelectList(movieDropdownData.Producers, "Id", "FullName");
-            ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "Name");
+            ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "FullName");
 
             return View(movie);
         }
@@ -69,7 +69,7 @@ public class MovieController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
-        var movieDetails = await _service.GetEntityByIdAsync(id);
+        var movieDetails = await _service.GetMovieByIdAsync(id);
 
         if (movieDetails == null)
             return View("NotFound");
@@ -93,7 +93,7 @@ public class MovieController : Controller
 
         ViewBag.Cinemas = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
         ViewBag.Producers = new SelectList(movieDropdownData.Producers, "Id", "FullName");
-        ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "Name");
+        ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "FullName");
 
         return View(response);
     }
@@ -112,7 +112,7 @@ public class MovieController : Controller
 
             ViewBag.Cinemas = new SelectList(movieDropdownData.Cinemas, "Id", "Name");
             ViewBag.Producers = new SelectList(movieDropdownData.Producers, "Id", "FullName");
-            ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "Name");
+            ViewBag.Actors = new SelectList(movieDropdownData.Actors, "Id", "FullName");
 
             return View(movie);
         }

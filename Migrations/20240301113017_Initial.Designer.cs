@@ -12,8 +12,8 @@ using eTickets.Context;
 namespace eTickets.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240227094425_seed_Database")]
-    partial class seed_Database
+    [Migration("20240301113017_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,56 +137,6 @@ namespace eTickets.Migrations
                     b.ToTable("Cinemas");
                 });
 
-            modelBuilder.Entity("eTickets.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("eTickets.Models.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Ammount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItems");
-                });
-
             modelBuilder.Entity("eTickets.Models.Producer", b =>
                 {
                     b.Property<int>("Id")
@@ -250,25 +200,6 @@ namespace eTickets.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("eTickets.Models.OrderItem", b =>
-                {
-                    b.HasOne("Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("eTickets.Models.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("Movie", b =>
                 {
                     b.Navigation("ActorsMovies");
@@ -282,11 +213,6 @@ namespace eTickets.Migrations
             modelBuilder.Entity("eTickets.Models.Cinema", b =>
                 {
                     b.Navigation("Movies");
-                });
-
-            modelBuilder.Entity("eTickets.Models.Order", b =>
-                {
-                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("eTickets.Models.Producer", b =>
