@@ -33,7 +33,10 @@
 
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-outline-success float-right" />
-                    <a class="btn btn-outline-success float-right" asp-action="Edit" asp-route-id="@Model.Id"> Edit </a>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-outline-success float-right" asp-action="Edit" asp-route-id="@Model.Id"> Edit </a>
+                    }
                     <a class="btn btn-outline-secondary" asp-action="Actor"> Show all </a>
                 </div>
             </div>
