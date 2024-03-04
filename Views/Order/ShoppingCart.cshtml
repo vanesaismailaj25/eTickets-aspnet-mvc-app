@@ -54,9 +54,12 @@
 
     <div class="text-center">
         <div class="btn-group">
-            <a class="btn btn-outline-primary" asp-controller="Order" asp-action="CompleteOrder">
-                Complete order
-            </a>
+            @* <a class="btn btn-outline-primary" asp-controller="Order" asp-action="CompleteOrder">
+            Complete order
+            </a> *@
+            <div id="paypal-btn"></div>
+            <span style="padding: 5px">
+            </span>
             <a class="btn btn-outline-success" asp-controller="Movie" asp-action="Movie">
                 Add more items
             </a>
@@ -64,3 +67,59 @@
     </div>
 
 </div>
+
+@section Scripts {
+
+    <script src="https://www.paypalobjects.com/api/checkout/js">
+    </script>
+
+
+    <script>
+        //here we are going to get the value for the total amount from the model with the help of a HTML function
+        let _total = @Html.Raw(Model.ShoppingCartTotal);
+
+
+
+        // here inside we are going to define all of the Button properties
+        // this is the Object we are going to work with ( Button )
+        paypal.Button.render({
+            //configure first the environment, which in this case is the sandbox of paypal
+            env: 'sandbox',
+            //the client is basically the app that we created at paypal
+            client: {
+                //here we are going to configure the sandbox by copying the Client ID value
+                sandbox: ''
+            },
+
+            //customize the button and for it we are going to define the lockout, how we want the button to appear, the language we want it to be displayed and the style
+            locale: 'en_US',
+            style: {
+                size: 'small',
+                color: 'gold',
+                shape: 'pill'
+            },
+            //if we want to enable the paynow checkout flow,we can add the below line
+            commit: true,
+            //set up the payment
+            payment: function (data, actions) {
+                //a payment in paypal is just an transaction,so for that we are just going to define the transaction property
+                return actions.payment.create({
+                    transactions: [{
+                        amount: {
+                            total: _total,
+                            currency: 'USD'
+                        }
+                    }]
+                });
+            },
+
+            //execute the payment
+            payment: function (data, actions) {
+                return actions.payment.execute().then(function () {
+                    var url = '@Url.Action("CompleteOrder", "Order", new { })';
+                    window.location.href = url;
+                });
+            }
+        }, '#paypal-btn');
+    </script>
+}
