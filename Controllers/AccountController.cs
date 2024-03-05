@@ -110,4 +110,8 @@ public class AccountController : Controller
         return RedirectToAction("Movie", "Movie");
     }
 
+    public IActionResult AccessDenied(string ReturnUrl)
+    {
+        return View();
+    }
 }

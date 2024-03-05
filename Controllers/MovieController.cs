@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using eTickets.Data.Services.IServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using eTickets.Data.Static;
 
 namespace eTickets.Controllers;
 
+[Authorize(Roles = UserRoles.Admin)]
 public class MovieController : Controller
 {
     private readonly IMovieService _service;
@@ -11,19 +14,26 @@ public class MovieController : Controller
     {
          _service = service;
     }
+
+    [AllowAnonymous]
     public async Task<IActionResult> Movie()
     {
         var data = await _service.GetAllAsync(n => n.Cinema);
 
         return View(data);
     }
+
+    [AllowAnonymous]
     public async Task<IActionResult> Filter(string searchString)
     {
         var data = await _service.GetAllAsync(n => n.Cinema);
 
         if (!string.IsNullOrEmpty(searchString))
         {
-            var filteredResult = data.Where(n => n.Name.ToLower().Contains(searchString.ToLower()) || n.Description.ToLower().Contains(searchString.ToLower())).ToList();
+            //var filteredResult = data.Where(n => n.Name.ToLower().Contains(searchString.ToLower()) || n.Description.ToLower().Contains(searchString.ToLower())).ToList();
+
+            var filteredResult = data.Where(n => string.Equals(n.Name, searchString, StringComparison.CurrentCultureIgnoreCase) 
+                                        || string.Equals(n.Description, searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
 
             return View("Movie", filteredResult);
         }
@@ -31,6 +41,7 @@ public class MovieController : Controller
         return View("Movie", data);
     }
 
+    [AllowAnonymous]
     public async Task<IActionResult> Details(int id)
     {
         var movieDetails = await _service.GetMovieByIdAsync(id);
