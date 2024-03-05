@@ -83,5 +83,7 @@ public class ShoppingCart
         var items = await _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).ToListAsync();
         _context.ShoppingCartItems.RemoveRange(items);
         await _context.SaveChangesAsync();
+        //to hide the shopping cart icon after an order is completed 
+        ShoppingCartItems = new List<ShoppingCartItem>();
     }
 }
